@@ -1,0 +1,29 @@
+{
+  "name": "mori-fluent",
+  "version": "0.0.1",
+  "description": " like mori-ext, but mixes in the functions from mori-ext into the prototypes of mori's collections",
+  "main": "mori-fluent.js",
+  "scripts": {
+    "test": "babel-tap spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roobie/mori-fluent.git"
+  },
+  "keywords": [
+    "fluent",
+    "mori"
+  ],
+  "author": "bjorn.roberg@gmail.com",
+  "license": "EPL-1.0",
+  "bugs": {
+    "url": "https://github.com/roobie/mori-fluent/issues"
+  },
+  "homepage": "https://github.com/roobie/mori-fluent#readme",
+  "dependencies": {
+    "mori-ext": "https://github.com/roobie/mori-ext/archive/v0.3.0.tar.gz"
+  },
+  "devDependencies": {
+    "babel-tap": "^5.0.0"
+  }
+}
