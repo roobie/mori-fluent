@@ -8,8 +8,7 @@
  */
 const ext = require('mori-ext');
 
-
-module.exports = function (mori) {
+module.exports = function (mori, ...extraMixins) {
   const protos = [
     mori.list(),
     mori.vector(),
@@ -23,6 +22,12 @@ module.exports = function (mori) {
   protos.forEach(proto => {
     Object.keys(ext).forEach(k => {
       proto[k] = ext[k];
+    });
+
+    extraMixins.forEach(mixin => {
+      Object.keys(mixin).forEach(k => {
+        proto[k] = mixin[k];
+      });
     });
   });
 
