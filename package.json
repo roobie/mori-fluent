@@ -1,6 +1,6 @@
 {
   "name": "mori-fluent",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": " like mori-ext, but mixes in the functions from mori-ext into the prototypes of mori's collections",
   "main": "mori-fluent.js",
   "scripts": {
