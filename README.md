@@ -49,7 +49,6 @@ const mori = require('mori-fluent')(require('mori'), require('mori-fluent/extra'
 
 ##### `assocMany`:
 ```js
-const vector = mori.vector;
 const v1 = vector().assocMany([
   [0, 9],
   [1, 9]

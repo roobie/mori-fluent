@@ -7,7 +7,9 @@ const mori = require('./mori-fluent')(require('mori'), require('./extra'));
 
 const {
   vector,
-  hashMap
+  hashMap,
+  list,
+  set
 } = mori;
 
 test('vector prototype should have assoc and equals', t => {
@@ -24,6 +26,15 @@ test('hashMap prototype should have updateIn', t => {
   const map2 = map1.updateIn(['foo', 1], mori.inc);
 
   t.deepEqual(map2.toJs(), hashMap('foo', vector(8, 10)).toJs());
+});
+
+test('predicates', t => {
+  const l = list();
+  t.ok(l.isList());
+  t.ok(l.isSequential());
+  t.ok(!l.isAssociative());
+
+  t.done();
 });
 
 // Extras =========================================================
