@@ -1,6 +1,6 @@
 {
   "name": "mori-fluent",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "description": " like mori-ext, but mixes in the functions from mori-ext into the prototypes of mori's collections",
   "main": "mori-fluent.js",
   "scripts": {
@@ -22,7 +22,7 @@
   "homepage": "https://github.com/roobie/mori-fluent#readme",
   "dependencies": {
     "mori": "^0.3.2",
-    "mori-ext": "https://github.com/roobie/mori-ext/archive/v0.3.0.tar.gz"
+    "mori-ext": "^0.3.0"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.9.0",
