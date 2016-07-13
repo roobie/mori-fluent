@@ -13,9 +13,11 @@ const {
 } = mori;
 
 test('vector prototype should have assoc and equals', t => {
-  t.plan(1);
+  t.plan(2);
 
-  t.ok(vector(1, 2).assoc(0, 10).equals(vector(10, 2)));
+  const r = vector(1, 2).assoc(0, 10);
+  t.equals(r.toString(), '[10 2]');
+  t.ok(r.equals(vector(10, 2)));
 });
 
 test('hashMap prototype should have updateIn', t => {
@@ -37,15 +39,35 @@ test('predicates', t => {
   t.done();
 });
 
-// Extras =========================================================
-test('assocMany', t => {
+test('filter', t => {
   t.plan(1);
 
-  const vec = mori.vector;
-  const v1 = vec(0).assocMany([
-    [0, 9],
-    [1, 9]
-  ]);
-
-  t.ok(v1.equals(vec(9, 9)));
+  const r = vector(0, 1, 0, 1, 0).filter(a => !a);
+  t.equals(r.toString(), '(0 0 0)');
 });
+
+test('groupBy', t => {
+  t.plan(1);
+
+  const v = vector(1, 2, 3, 4);
+  const r = v.groupBy(x => mori.isEven(x) ? 'even' : 'odd');
+  t.deepEquals(r.toJs(), {even: [2, 4], odd: [1, 3]});
+});
+
+// Compat =========================================================
+test('map', t => {
+  t.plan(1);
+
+  const r = vector(1, 2, 3).map(mori.inc);
+  t.equals(r.toString(), '(2 3 4)');
+});
+
+test('reduce', t => {
+  t.plan(1);
+
+  const v = vector(0, 1, 2);
+  const r = v.reduce((acc, x) => acc.assoc(x, x), hashMap());
+
+  t.equals(r.toString(), '{0 0, 1 1, 2 2}');
+});
+

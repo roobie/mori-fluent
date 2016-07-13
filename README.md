@@ -40,19 +40,3 @@ const map1 = hashMap('foo', vector(8, 9))
 console.log(map1.equals(hashMap('foo', vector(8, 10))));
 ```
 
-## Extras
-
-The `extra` module can be loaded by passing it to the `mori-fluent` monkey patcher:
-```js
-const mori = require('mori-fluent')(require('mori'), require('mori-fluent/extra'));
-```
-
-##### `assocMany`:
-```js
-const v1 = vector().assocMany([
-  [0, 9],
-  [1, 9]
-]);
-
-console.log(v1.equals(vector(9, 9)));
-```
