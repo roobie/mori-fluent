@@ -49,6 +49,7 @@ const compat = function (mori) {
     cons: function moriFluent_cons(value) {
       mori.cons(value, this);
     }
+    // update, as updateIn, but like `m.update(':k', mori.inc)`
   };
 };
 
