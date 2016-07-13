@@ -22,15 +22,24 @@ const compat = function (mori) {
     map: function moriFluent_map(fn) {
       return mori.map(fn, this);
     },
-    reduce: function moriFluent_reduce(pred, initial) {
-      return initial ?
-        mori.reduce(pred, initial, this) :
-        mori.reduce(pred, this);
+    /**
+     @example
+     `mori.vector(1, 2).mapKV(mori.vector); // => ([0 1] [1 2])`
+     */
+    mapKV: function moriFluent_mapKV(fn) {
+      return mori.seq(this.reduceKV(
+        (acc, k, v) => acc.conj(fn(k, v)),
+        mori.vector()));
     },
-    reduceKV: function moriFluent_reduceKV(pred, initial) {
+    reduce: function moriFluent_reduce(fn, initial) {
       return initial ?
-        mori.reduceKV(pred, initial, this) :
-        mori.reduceKV(pred, this);
+        mori.reduce(fn, initial, this) :
+        mori.reduce(fn, this);
+    },
+    reduceKV: function moriFluent_reduceKV(fn, initial) {
+      return initial ?
+        mori.reduceKV(fn, initial, this) :
+        mori.reduceKV(fn, this);
     },
     /**
      @example

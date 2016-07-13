@@ -62,6 +62,13 @@ test('map', t => {
   t.equals(r.toString(), '(2 3 4)');
 });
 
+test('mapKV', t => {
+  t.plan(1);
+
+  const r = vector(1, 2, 3).mapKV((k, v) => vector(k, v));
+  t.equals(r.toString(), '([0 1] [1 2] [2 3])');
+});
+
 test('reduce', t => {
   t.plan(1);
 
@@ -69,5 +76,14 @@ test('reduce', t => {
   const r = v.reduce((acc, x) => acc.assoc(x, x), hashMap());
 
   t.equals(r.toString(), '{0 0, 1 1, 2 2}');
+});
+
+test('reduceKV', t => {
+  t.plan(1);
+
+  const m = hashMap(':a', 1, ':b', 2);
+  const r = m.reduceKV((acc, k, v) => acc.assoc(v, k), hashMap());
+
+  t.deepEquals(r.toJs(), {'1': ':a', '2': ':b'});
 });
 
