@@ -27,9 +27,10 @@ const compat = function (mori) {
      `mori.vector(1, 2).mapKV(mori.vector); // => ([0 1] [1 2])`
      */
     mapKV: function moriFluent_mapKV(fn) {
-      return mori.seq(this.reduceKV(
-        (acc, k, v) => acc.conj(fn(k, v)),
-        mori.vector()));
+      return this
+        .reduceKV((acc, k, v) => acc.conj(fn(k, v)),
+                  mori.vector())
+        .take(this.count());
     },
     reduce: function moriFluent_reduce(fn, initial) {
       return initial ?

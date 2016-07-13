@@ -56,17 +56,24 @@ test('groupBy', t => {
 
 // Compat =========================================================
 test('map', t => {
-  t.plan(1);
+  t.plan(2);
 
   const r = vector(1, 2, 3).map(mori.inc);
   t.equals(r.toString(), '(2 3 4)');
+
+  const nil = vector().map(mori.identity);
+  t.equals(nil.toString(), '()');
 });
 
 test('mapKV', t => {
-  t.plan(1);
+  t.plan(3);
 
   const r = vector(1, 2, 3).mapKV((k, v) => vector(k, v));
   t.equals(r.toString(), '([0 1] [1 2] [2 3])');
+
+  const nil = vector().mapKV(mori.identity);
+  t.equals(nil.toString(), '()');
+  t.ok(mori.isSeq(nil));
 });
 
 test('reduce', t => {
