@@ -53,7 +53,8 @@ const compat = function (mori) {
   };
 };
 
-module.exports = function (mori, ...extraMixins) {
+module.exports = function (mori) {
+  const extraMixins = [].slice.call(arguments, 1);
   const protos = [
     // basic collections
     mori.list(),

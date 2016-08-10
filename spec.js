@@ -5,12 +5,11 @@ const test = tap.test;
 // also registers "extra" module
 const mori = require('./mori-fluent')(require('mori'), require('./extra'));
 
-const {
-  vector,
-  hashMap,
-  list,
-  set
-} = mori;
+const vector = mori.vector
+, hashMap = mori.hashMap
+, list = mori.list
+, set = mori.set
+;
 
 test('vector prototype should have assoc and equals', t => {
   t.plan(2);

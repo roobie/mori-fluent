@@ -25,7 +25,6 @@
     "mori-ext": "^0.3.0"
   },
   "devDependencies": {
-    "babel-preset-es2015": "^6.9.0",
     "babel-tap": "^5.0.0",
     "mori": "^0.3.2"
   }
