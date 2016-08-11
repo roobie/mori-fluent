@@ -53,4 +53,7 @@ const mori = moriExtender({
 })
 
 const result = mori.vector(1, 3, 5).prettyJSON();
+
+// also good to know, that there is only one mori instance:
+console.log(mori === require('mori-fluent'));
 ```
