@@ -3,7 +3,7 @@ const tap = require('tap');
 const test = tap.test;
 
 // also registers "extra" module
-const mori = require('./mori-fluent')(require('mori'), require('./extra'));
+const mori = require('./mori-fluent').mori;
 
 const vector = mori.vector
 , hashMap = mori.hashMap
@@ -93,3 +93,15 @@ test('reduceKV', t => {
   t.deepEquals(r.toJs(), {'1': ':a', '2': ':b'});
 });
 
+test('extending', t => {
+  t.plan(2);
+
+  const m = require('./mori-fluent').extend({
+    aMethod: function () {
+      return 1;
+    }
+  });
+
+  t.equals(m.vector().aMethod(), 1);
+  t.equals(mori, m);
+});

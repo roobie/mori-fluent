@@ -7,55 +7,20 @@
  may appeal to some.
  */
 const ext = require('mori-ext');
+const mori = require('mori');
 
-// compatibility with method type invocations,
-// e.g. `map` which in mori-ext expects `this`
-// to be a `function`, whereas in mori-fluent
-// `this` in `map` should be a collection
-// `map`, `cons`
-const compat = function (mori) {
-  return {
-    /**
-     @example
-     `mori.vector(1, 2, 3).map(mori.inc); // => (2 3 4)`
-     */
-    map: function moriFluent_map(fn) {
-      return mori.map(fn, this);
-    },
-    /**
-     @example
-     `mori.vector(1, 2).mapKV(mori.vector); // => ([0 1] [1 2])`
-     */
-    mapKV: function moriFluent_mapKV(fn) {
-      return this
-        .reduceKV((acc, k, v) => acc.conj(fn(k, v)),
-                  mori.vector())
-        .take(this.count());
-    },
-    reduce: function moriFluent_reduce(fn, initial) {
-      return initial ?
-        mori.reduce(fn, initial, this) :
-        mori.reduce(fn, this);
-    },
-    reduceKV: function moriFluent_reduceKV(fn, initial) {
-      return initial ?
-        mori.reduceKV(fn, initial, this) :
-        mori.reduceKV(fn, this);
-    },
-    /**
-     @example
-     `mori.vector(2, 3).cons(1); // => [1 2 3]`
-     */
-    cons: function moriFluent_cons(value) {
-      mori.cons(value, this);
-    }
-    // update, as updateIn, but like `m.update(':k', mori.inc)`
-  };
+const compatLayer = require('./compat.js');
+
+module.exports = {
+  mori: definition(),
+  extend: definition
 };
 
-module.exports = function (mori) {
-  const extraMixins = [].slice.call(arguments, 1);
-  const protos = [
+// actual impl.
+function definition() {
+  const extraMixins = [].slice.call(arguments, 0);
+
+  const protoList = [
     // basic collections
     mori.list(),
     mori.vector(),
@@ -71,13 +36,27 @@ module.exports = function (mori) {
     mori.map(mori.identity, [0]),
   ].map(coll => coll.constructor.prototype);
 
+  updateProtos(extraMixins, protoList);
+
+  // hashMap creates a PersistentArrayMap at first,
+  // but will switch underlying type after some updates.
+  const persistentHashMapInstance =
+          getInstanceOfSwitchedUnderlyingType(mori.hashMap());
+
+  updateProtos(extraMixins, [
+    persistentHashMapInstance,
+  ].map(coll => coll.constructor.prototype));
+
+  return mori;
+};
+
+function updateProtos(extraMixins, protos) {
   protos.forEach(proto => {
     Object.keys(ext).forEach(k => {
       proto[k] = ext[k];
     });
 
     // update the prototypes with the compat layer.
-    const compatLayer = compat(mori);
     Object.keys(compatLayer).forEach(k => {
       proto[k] = compatLayer[k];
     });
@@ -89,6 +68,17 @@ module.exports = function (mori) {
       });
     });
   });
+}
 
-  return mori;
-};
+function getInstanceOfSwitchedUnderlyingType(coll) {
+  return (function rec(coll, count) {
+    try {
+      // if coll.assoc(..) throws, we found what we were
+      // looking for
+      const result = coll.assoc(count, count * count);
+      return rec(result, count + 1);
+    } catch (e) {
+      return coll;
+    }
+  })(coll, 0);
+}

@@ -1,6 +1,6 @@
 {
   "name": "mori-fluent",
-  "version": "0.0.10",
+  "version": "1.0.0",
   "description": " like mori-ext, but mixes in the functions from mori-ext into the prototypes of mori's collections",
   "main": "mori-fluent.js",
   "scripts": {
@@ -25,7 +25,6 @@
     "mori-ext": "^0.3.0"
   },
   "devDependencies": {
-    "babel-tap": "^5.0.0",
-    "mori": "^0.3.2"
+    "babel-tap": "^5.0.0"
   }
 }
