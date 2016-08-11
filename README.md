@@ -7,7 +7,7 @@ so that they can be used as "methods".
 
 ## basic usage
 
-To register the functionality, call the function returned by the `mori-fluent` module:
+use the value in the `mori` property of the object returned by the module:
 ```js
 const mori = require('mori-fluent').mori;
 ```
@@ -27,11 +27,17 @@ const {
 } = mori;
 ```
 
+we can do stuff fluently
+
 ```js
 const v1 = vector(1, 2);
-const v2 = v1.assoc(0, 10);
+const v2 = v1
+  .assoc(0, 10)
+  .map(mori.inc)
+  .conj(5)
 
-console.log(v2.equals(vector(10, 2)));
+console.log(v2.equals(vector(5, 11, 3)));
+
 ```
 
 ```js

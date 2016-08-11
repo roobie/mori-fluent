@@ -31,18 +31,23 @@ function definition() {
     mori.queue(),
 
     // special cases
-    mori.seq([0]),
-    mori.primSeq([0]),
-    mori.map(mori.identity, [0]),
+    // IndexedSeq
+    mori.seq([0]), // same as mori.primSeq([0]),
+    // LazySeq
+    mori.repeat(1),
+    // Cons
+    mori.cons(1, mori.vector(1))
   ].map(coll => coll.constructor.prototype);
 
   updateProtos(extraMixins, protoList);
 
   // hashMap creates a PersistentArrayMap at first,
-  // but will switch underlying type after some updates.
+  // but will switch underlying type after some updates
+  // to a PersistentHashMap
   const persistentHashMapInstance =
           getInstanceOfSwitchedUnderlyingType(mori.hashMap());
 
+  // we are probably missing some references here. Time will, perhaps, tell.
   updateProtos(extraMixins, [
     persistentHashMapInstance,
   ].map(coll => coll.constructor.prototype));

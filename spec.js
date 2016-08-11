@@ -29,6 +29,18 @@ test('hashMap prototype should have updateIn', t => {
   t.deepEqual(map2.toJs(), hashMap('foo', vector(8, 10)).toJs());
 });
 
+test('README examples', t => {
+  t.plan(1);
+
+  const v1 = vector(1, 2);
+  const v2 = v1
+          .assoc(0, 10)
+          .map(mori.inc)
+          .conj(5);
+
+  t.ok(v2.equals(vector(5, 11, 3)));
+})
+
 test('predicates', t => {
   const l = list();
   t.ok(l.isList());
