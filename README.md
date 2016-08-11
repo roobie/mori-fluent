@@ -44,11 +44,13 @@ console.log(map1.equals(hashMap('foo', vector(8, 10))));
 
 If you want, you can monkey patch the prototypes with your own methods, by using `require('mori-fluent').extend` which is a function accepting an object hash whose property names are mapped to method names and the corresponding function is mapped as the method. Example:
 
-```
+```js
 const moriExtender = require('mori-fluent').extend;
 const mori = moriExtender({
     prettyJSON: function myPretty() {
         return JSON.stringify(this.toJs(), null, 2);
     }
 })
+
+const result = mori.vector(1, 3, 5).prettyJSON();
 ```
