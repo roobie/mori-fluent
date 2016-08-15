@@ -36,7 +36,11 @@ function definition() {
     // LazySeq
     mori.repeat(1),
     // Cons
-    mori.cons(1, mori.vector(1))
+    mori.cons(1, mori.vector(1)),
+    // RSeq
+    mori.reverse(mori.vector(1,2)),
+    // List
+    mori.reverse(mori.rest(mori.reverse(mori.vector(1,2))))
   ].map(coll => coll.constructor.prototype);
 
   updateProtos(extraMixins, protoList);
